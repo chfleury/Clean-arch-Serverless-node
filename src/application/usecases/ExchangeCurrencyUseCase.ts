@@ -10,6 +10,10 @@ import {
 import { UseCase } from "../utils/UseCase";
 import { left, right } from "../../shared/utils/Either";
 import { Exception } from "../../shared/utils/Exception";
+import {
+  InternalServerError,
+  UnsupportedCurrencyCodeException,
+} from "../exceptions/applicationExceptions";
 
 @injectable()
 export class ExchangeCurrencyUseCase
@@ -37,25 +41,16 @@ export class ExchangeCurrencyUseCase
         exchangeResult: exchangeResult,
       });
     } catch (err) {
-      return left({
-        kind: "InternalError",
-        message: "Something went wrong",
-      });
+      return left(InternalServerError);
     }
   }
 
   private handleServiceError(error: Exception): Exception {
     if (error.kind === "unsupported-code") {
-      return {
-        kind: "unsupported-currency-code",
-        message: "The Base or Target currency code is not supported",
-      };
+      return UnsupportedCurrencyCodeException;
     }
 
-    return {
-      kind: "internal-server-error",
-      message: "Something unexpected happend",
-    };
+    return InternalServerError;
   }
 
   private calculateExchangeResult(exchangeRate: number, amount: number) {

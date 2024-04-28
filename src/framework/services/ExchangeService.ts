@@ -9,6 +9,10 @@ import {
 import { Left, left, right } from "../../shared/utils/Either";
 import axios, { isAxiosError } from "axios";
 import { Exception } from "../../shared/utils/Exception";
+import {
+  GeneralExchangeServiceError,
+  UnsupportedCodeServiceException,
+} from "../../adapters/exceptions/adaptersExceptions";
 
 dotenv.config();
 
@@ -57,16 +61,10 @@ export class ExchangeService implements ExchangeServiceInterface {
       const errorData: ApiError = error.response.data;
 
       if (errorData["error-type"] === "unsupported-code") {
-        return left({
-          kind: "unsupported-code",
-          message: "Either the base or target code are unsupported",
-        });
+        return left(UnsupportedCodeServiceException);
       }
     }
 
-    return left({
-      kind: "general-service-error",
-      message: "Exchange Service failed with a general error",
-    });
+    return left(GeneralExchangeServiceError);
   }
 }
