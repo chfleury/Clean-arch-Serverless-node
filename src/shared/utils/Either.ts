@@ -1,3 +1,8 @@
+/**
+ * Represents a data type for either left or right values.
+ * Left are usually execptions
+ * Right is the expected value
+ */
 export type Either<L, A> = Left<L, A> | Right<L, A>;
 
 export class Left<L, A> {
