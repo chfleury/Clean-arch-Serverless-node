@@ -16,12 +16,15 @@ describe("ExchangeCurrencyUseCase", () => {
       targetCurrency: "brl",
     };
 
+    const spy = jest.spyOn(exchangeServiceMock, "getExchangeRate");
+
     const result = await sut.run(input);
 
     expect(result.isLeft()).toBeFalsy();
     expect(result.isRight).toBeTruthy();
 
     if (result.isRight()) {
+      expect(spy).toHaveBeenCalledTimes(1);
       expect(result.value).toHaveProperty("exchangeResult");
       expect(result.value).toHaveProperty("exchangeRate");
       expect(result.value?.exchangeResult).toBe(
