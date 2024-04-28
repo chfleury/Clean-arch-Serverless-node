@@ -1,6 +1,5 @@
 export type Either<L, A> = Left<L, A> | Right<L, A>;
 
-// TODO REFACTOR (MAYBE)
 export class Left<L, A> {
   readonly value: L;
 

@@ -46,8 +46,6 @@ export class ExchangeCurrencyPresenter
       };
     }
 
-    // TODO rest of the errors
-
     return {
       status: 500,
       data: {
