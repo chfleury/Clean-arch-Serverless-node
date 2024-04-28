@@ -8,14 +8,20 @@ export type ValidationError = {
 };
 
 export abstract class Validatable<A> {
-  constructor(private data: Partial<A>) {}
+  private readonly data: Partial<A>;
+
+  constructor(obj: Partial<A>) {
+    this.data = obj;
+  }
 
   export(): A {
     return this.data as A;
   }
 
   checkForErrors(): ValidationError | null {
-    const validationResult = validateSync(this.data);
+    Object.assign(this, this.data);
+    console.log(this);
+    const validationResult = validateSync(this);
 
     const errors = this.getErrors(validationResult);
 
@@ -30,6 +36,7 @@ export abstract class Validatable<A> {
 
     if (hasErrrors) {
       const validationErrors: string[] = [];
+
       validationResult.forEach((obj) => {
         const constraints = obj.constraints;
 
