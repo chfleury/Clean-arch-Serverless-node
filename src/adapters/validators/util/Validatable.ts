@@ -17,12 +17,18 @@ export abstract class Validatable<A> {
   checkForErrors(): ValidationError | null {
     const validationResult = validateSync(this.data);
 
-    // TODO REFACTOR
-    if (
+    const errors = this.getErrors(validationResult);
+
+    return errors ? { errors } : null;
+  }
+
+  private getErrors(validationResult: ClassValidationError[]): string[] | null {
+    const hasErrrors =
       validationResult instanceof Array &&
       validationResult.length &&
-      validationResult[0] instanceof ClassValidationError
-    ) {
+      validationResult[0] instanceof ClassValidationError;
+
+    if (hasErrrors) {
       const validationErrors: string[] = [];
       validationResult.forEach((obj) => {
         const constraints = obj.constraints;
@@ -34,9 +40,7 @@ export abstract class Validatable<A> {
         }
       });
 
-      return {
-        errors: validationErrors,
-      };
+      return validationErrors;
     }
 
     return null;
