@@ -45,6 +45,10 @@ export class ExchangeCurrencyUseCase
     }
   }
 
+  /**
+   * Handles service errors by determining the appropriate exception to return based on the error type
+   * the service has returned
+   */
   private handleServiceError(error: Exception): Exception {
     if (error.kind === "unsupported-code") {
       return UnsupportedCurrencyCodeException;
@@ -53,7 +57,16 @@ export class ExchangeCurrencyUseCase
     return InternalServerError;
   }
 
-  private calculateExchangeResult(exchangeRate: number, amount: number) {
+  /**
+   * Calculates the result of an exchange based on the exchange rate and amount.
+   * @param {number} exchangeRate - The exchange rate to use for the calculation.
+   * @param {number} amount - The amount to be exchanged.
+   * @returns {number} The result of the exchange calculation.
+   */
+  private calculateExchangeResult(
+    exchangeRate: number,
+    amount: number
+  ): number {
     return exchangeRate * amount;
   }
 }
