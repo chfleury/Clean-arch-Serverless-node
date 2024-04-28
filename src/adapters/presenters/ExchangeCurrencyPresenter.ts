@@ -1,13 +1,21 @@
-import { ExchangeCurrencyOutput } from "../../application/dtos/ExchangeCurrencyDto";
+import {
+  ExchangeCurrencyOutput,
+  ExchangeCurrencyUseCaseResponse,
+} from "../../application/dtos/ExchangeCurrencyDto";
 import { Exception } from "../../shared/utils/Exception";
+import { Presenter } from "../util/Presenter";
+import { View, ErrorView } from "../util/View";
 import { ValidationError } from "../validators/util/Validatable";
-import { Presenter } from "./util/Presenter";
-import { ErrorView, View } from "./util/View";
-
 export class ExchangeCurrencyPresenter
-  implements Presenter<ExchangeCurrencyOutput, View | ErrorView>
+  implements
+    Presenter<
+      ExchangeCurrencyOutput,
+      View<ExchangeCurrencyUseCaseResponse> | ErrorView
+    >
 {
-  present(data: ExchangeCurrencyOutput): View | ErrorView {
+  present(
+    data: ExchangeCurrencyOutput
+  ): View<ExchangeCurrencyUseCaseResponse> | ErrorView {
     if (data.isLeft()) {
       return this.presentError(data.value);
     }
@@ -15,7 +23,7 @@ export class ExchangeCurrencyPresenter
     return this.presentSuccess(data.value);
   }
 
-  presentValidationError(data: ValidationError): View | ErrorView {
+  presentValidationError(data: ValidationError): ErrorView {
     return {
       status: 400,
       data: {
@@ -56,7 +64,7 @@ export class ExchangeCurrencyPresenter
   }: {
     exchangeResult: number;
     exchangeRate: number;
-  }): View {
+  }): View<ExchangeCurrencyUseCaseResponse> {
     return {
       status: 200,
       data: {

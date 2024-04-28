@@ -1,18 +1,26 @@
 import "reflect-metadata";
 import { inject, injectable } from "inversify";
 import { ExchangeCurrencyValidator } from "../validators/ExchangeCurrencyValidator";
-import { UseCase } from "../../application/utils/UseCase";
 import { ExchangeCurrencyUseCase } from "../../application/usecases/ExchangeCurrencyUseCase";
 import { ExchangeCurrencyPresenter } from "../presenters/ExchangeCurrencyPresenter";
+import { Controller, Request } from "../util/Controller";
+import { ErrorView, View } from "../util/View";
+import { ExchangeCurrencyUseCaseResponse } from "../../application/dtos/ExchangeCurrencyDto";
 
 @injectable()
-export class ExchangeCurrencyController {
+export class ExchangeCurrencyController
+  implements
+    Controller<
+      ExchangeCurrencyValidator,
+      Promise<View<ExchangeCurrencyUseCaseResponse> | ErrorView>
+    >
+{
   constructor(
-    @inject(ExchangeCurrencyUseCase) private interactor: UseCase<any, any>
+    @inject(ExchangeCurrencyUseCase) private interactor: ExchangeCurrencyUseCase
   ) {}
   async run(
-    req: any // TODO
-  ): Promise<any> {
+    req: Request<ExchangeCurrencyValidator>
+  ): Promise<View<ExchangeCurrencyUseCaseResponse> | ErrorView> {
     const presenter = new ExchangeCurrencyPresenter();
 
     const validatedRequest = new ExchangeCurrencyValidator({

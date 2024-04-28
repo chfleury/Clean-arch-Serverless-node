@@ -10,8 +10,8 @@ export type ValidationError = {
 export abstract class Validatable<A> {
   constructor(private data: Partial<A>) {}
 
-  export(): Partial<A> {
-    return this.data;
+  export(): A {
+    return this.data as A;
   }
 
   checkForErrors(): ValidationError | null {

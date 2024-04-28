@@ -7,7 +7,12 @@ export type ExchangeCurrencyInput = {
   amount: number;
 };
 
+export type ExchangeCurrencyUseCaseResponse = {
+  exchangeResult: number;
+  exchangeRate: number;
+};
+
 export type ExchangeCurrencyOutput = Either<
   Exception,
-  { exchangeResult: number; exchangeRate: number }
+  ExchangeCurrencyUseCaseResponse
 >;

@@ -1,4 +1,4 @@
-export type View = { status: number; data: Record<string, any> };
+export type View<T = Record<string, any>> = { status: number; data: T };
 
 export type ErrorView = {
   status: number;
