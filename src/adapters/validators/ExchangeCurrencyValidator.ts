@@ -10,6 +10,14 @@ export class ExchangeCurrencyValidator extends Validatable<ExchangeCurrencyValid
   @IsISO4217CurrencyCode()
   targetCurrency!: string;
 
-  @IsDecimal({ decimal_digits: ",2" })
+  @IsDecimal(
+    {
+      decimal_digits: "2",
+    },
+    {
+      message:
+        "Invalid number format. Must be a number with at most 2 decimal places.",
+    }
+  )
   amount!: number;
 }

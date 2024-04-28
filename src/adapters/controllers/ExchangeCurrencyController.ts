@@ -31,7 +31,7 @@ export class ExchangeCurrencyController
 
     const validationErrors = validatedRequest.checkForErrors();
 
-    if (validationErrors) {
+    if (validationErrors?.errors?.length) {
       return presenter.presentValidationError(validationErrors);
     }
 

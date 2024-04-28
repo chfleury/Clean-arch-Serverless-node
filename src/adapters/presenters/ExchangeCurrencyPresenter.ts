@@ -2,6 +2,7 @@ import {
   ExchangeCurrencyOutput,
   ExchangeCurrencyUseCaseResponse,
 } from "../../application/dtos/ExchangeCurrencyDto";
+import { UnsupportedCurrencyCodeException } from "../../application/exceptions/applicationExceptions";
 import { Exception } from "../../shared/utils/Exception";
 import { Presenter } from "../util/Presenter";
 import { View, ErrorView } from "../util/View";
@@ -35,7 +36,7 @@ export class ExchangeCurrencyPresenter
   }
 
   private presentError(err: Exception): ErrorView {
-    if (err.kind === "unsuported-code") {
+    if (err.kind === UnsupportedCurrencyCodeException.kind) {
       return {
         status: 400,
         data: {
