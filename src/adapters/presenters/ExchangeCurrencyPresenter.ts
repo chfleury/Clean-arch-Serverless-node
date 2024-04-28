@@ -66,7 +66,7 @@ export class ExchangeCurrencyPresenter
     return {
       status: 200,
       data: {
-        exchangeResult,
+        exchangeResult: parseFloat(exchangeResult.toFixed(2)),
         exchangeRate,
       },
     };
