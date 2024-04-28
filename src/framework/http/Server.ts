@@ -1,9 +1,13 @@
 import express, { Application } from "express";
+import dotenv from "dotenv";
+
 import { ExchangeCurrencyController } from "../../adapters/controllers/ExchangeCurrencyController";
 import { container } from "../ioc/Container";
 
+dotenv.config();
+
 export class Server {
-  static port = 3000; //TODO
+  static port = process.env["PORT"] ?? 3000;
   public readonly server: Application;
   constructor() {
     this.server = express();
