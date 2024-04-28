@@ -1,12 +1,26 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { lambdaHandler } from '../../app';
+import { syncChallengeLambdaHandler } from '../../app';
 import { expect, describe, it } from '@jest/globals';
 
-describe('Unit test for app handler', function () {
+describe('Unit test for app', function () {
     it('verifies successful response', async () => {
+        const inputBody = JSON.stringify({
+            firstName: 'John',
+            lastName: 'Doe',
+            email: 'john.doe@example.com',
+            age: 30,
+            address: {
+                street: '123 Main St',
+                city: 'Anytown',
+                state: 'NY',
+                zipCode: '12345',
+                country: 'USA',
+            },
+        });
+
         const event: APIGatewayProxyEvent = {
-            httpMethod: 'get',
-            body: '',
+            httpMethod: 'post',
+            body: inputBody,
             headers: {},
             isBase64Encoded: false,
             multiValueHeaders: {},
@@ -53,13 +67,10 @@ describe('Unit test for app handler', function () {
             resource: '',
             stageVariables: {},
         };
-        const result: APIGatewayProxyResult = await lambdaHandler(event);
+
+        const result: APIGatewayProxyResult = await syncChallengeLambdaHandler(event);
 
         expect(result.statusCode).toEqual(200);
-        expect(result.body).toEqual(
-            JSON.stringify({
-                message: 'hello world',
-            }),
-        );
+        expect(result.body).toEqual(inputBody);
     });
 });

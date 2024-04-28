@@ -20,7 +20,7 @@ Resources:
   SyncChallengeFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: src/
+      CodeUri: src
       Handler: app.syncChallengeLambdaHandler
       Runtime: nodejs20.x
       Architectures:
@@ -31,6 +31,39 @@ Resources:
           Properties:
             Path: /createUser
             Method: post
+  EventRule: 
+    Type: AWS::Events::Rule
+    Properties: 
+      Description: "DebugEventRule"
+      EventPattern: 
+        source: 
+          - "challenge.async"
+  AsyncChallengeQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: async-challenge-queue
+  AsyncChallengeFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src
+      Handler: app.asyncChallengeLambdaHandler
+      Runtime: nodejs20.x
+      Architectures:
+      - x86_64
+      Policies:
+      - Statement:
+        - Sid: EventBridgePutEvents
+          Effect: "Allow"
+          Action:
+            - "events:PutEvents"
+          Resource: "*"
+      Events:
+        MySQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt AsyncChallengeQueue.Arn
+            BatchSize: 1
+
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
