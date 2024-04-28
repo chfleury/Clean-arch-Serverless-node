@@ -17,25 +17,25 @@ Globals:
   Api:
     TracingEnabled: true
 Resources:
-  HelloWorldFunction:
+  SyncChallengeFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello-world/
-      Handler: app.lambdaHandler
+      CodeUri: src/
+      Handler: app.syncChallengeLambdaHandler
       Runtime: nodejs20.x
       Architectures:
       - x86_64
       Events:
-        HelloWorld:
+        SyncChallenge:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello
-            Method: get
+            Path: /createUser
+            Method: post
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
-        Target: es2020
+        Target: es2022
         Sourcemap: true
         EntryPoints:
         - app.ts
