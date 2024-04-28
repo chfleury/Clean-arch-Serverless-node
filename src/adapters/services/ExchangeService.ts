@@ -1,5 +1,5 @@
-import { Either } from "../../application/utils/Either";
-import { Exception } from "../../application/utils/Exception";
+import { Either } from "../../shared/utils/Either";
+import { Exception } from "../../shared/utils/Exception";
 
 export const ExchangeServiceSymbol = Symbol.for("ExchangeService");
 

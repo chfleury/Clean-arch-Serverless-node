@@ -1,5 +1,5 @@
-import { Either } from "../utils/Either";
-import { Exception } from "../utils/Exception";
+import { Either } from "../../shared/utils/Either";
+import { Exception } from "../../shared/utils/Exception";
 
 export type ExchangeCurrencyInput = {
   baseCurrency: string;
