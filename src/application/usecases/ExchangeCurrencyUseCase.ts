@@ -8,8 +8,8 @@ import {
   ExchangeCurrencyOutput,
 } from "../dtos/ExchangeCurrencyDto";
 import { UseCase } from "../utils/UseCase";
-import { left, right } from "../utils/Either";
-import { Exception } from "../utils/Exception";
+import { left, right } from "../../shared/utils/Either";
+import { Exception } from "../../shared/utils/Exception";
 
 @injectable()
 export class ExchangeCurrencyUseCase
@@ -34,7 +34,7 @@ export class ExchangeCurrencyUseCase
 
       return right({
         exchangeRate: exchangeRate.value,
-        exchangeResult: this.formatCurrencyValue(exchangeResult),
+        exchangeResult: exchangeResult,
       });
     } catch (err) {
       return left({
@@ -60,9 +60,5 @@ export class ExchangeCurrencyUseCase
 
   private calculateExchangeResult(exchangeRate: number, amount: number) {
     return exchangeRate * amount;
-  }
-
-  private formatCurrencyValue(amount: number) {
-    return amount; // TODO implement
   }
 }
