@@ -20,7 +20,7 @@ export const syncChallengeLambdaHandler = async (event: APIGatewayProxyEvent): P
 
         return {
             statusCode: 200,
-            body,
+            body: JSON.stringify(body),
         };
     } catch (err) {
         console.log(err);
