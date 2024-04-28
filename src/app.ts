@@ -10,20 +10,24 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
  *
  */
 
-export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const syncChallengeLambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
+        if (!event.body) {
+            throw new Error('Missing request body');
+        }
+
+        const body = JSON.parse(event.body);
+
         return {
             statusCode: 200,
-            body: JSON.stringify({
-                message: 'hello world',
-            }),
+            body,
         };
     } catch (err) {
         console.log(err);
         return {
             statusCode: 500,
             body: JSON.stringify({
-                message: 'some error happened',
+                message: 'Something unexpected happened',
             }),
         };
     }
