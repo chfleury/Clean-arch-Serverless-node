@@ -26,11 +26,8 @@ Exemplo de body a ser enviado:
   - Após o acionamento, a lambda envia os mesmos dados para um EventBridge.
 
 
-```json
-{
-  "id": "866044287365636609",
-  "name": "John Doe",
-}
+```
+"{\"id\":\"866044287365636609\",\"name\":\"John Doe\"}"
 ```
 
 ## Deploy
