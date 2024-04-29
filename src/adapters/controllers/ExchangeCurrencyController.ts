@@ -24,7 +24,7 @@ export class ExchangeCurrencyController
     const presenter = new ExchangeCurrencyPresenter();
 
     const validatedRequest = new ExchangeCurrencyValidator({
-      amount: req?.body?.amount,
+      amount: req?.body?.amount?.toString(),
       baseCurrency: req?.body?.baseCurrency,
       targetCurrency: req?.body?.targetCurrency,
     });
@@ -35,7 +35,12 @@ export class ExchangeCurrencyController
       return presenter.presentValidationError(validationErrors);
     }
 
-    const result = await this.interactor.run(validatedRequest.export());
+    const validatedData = validatedRequest.export();
+
+    const result = await this.interactor.run({
+      ...validatedData,
+      amount: parseFloat(validatedData.amount),
+    });
 
     return presenter.present(result);
   }

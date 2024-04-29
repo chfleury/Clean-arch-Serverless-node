@@ -12,12 +12,12 @@ export class ExchangeCurrencyValidator extends Validatable<ExchangeCurrencyValid
 
   @IsDecimal(
     {
-      decimal_digits: "2",
+      decimal_digits: "0,2",
     },
     {
       message:
         "Invalid number format. Must be a number with at most 2 decimal places.",
     }
   )
-  amount!: number;
+  amount!: string;
 }
