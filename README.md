@@ -1,10 +1,34 @@
-## Visão Geral
-Aplicação AWS SAM proposta no desafio da Liqi.
+# Desafio 2 (Teste serverless)
+
+## Funcionamento
+
+- **Teste Serverless Síncrono:**
+  - Função Lambda acionada pela API Gateway no método POST através do endpoint `createUser`. O corpo da requisição é retornado como resposta de sucesso para a API Gateway.
+
+- **Teste Serverless Assíncrono:**
+  - Função Lambda acionada pelo SQS.
+  - Após o acionamento, a lambda envia os mesmos dados para um EventBridge.
+
+
+## Deploy
+Para deploy do projeto, na pasta raiz, execute:
+
+```bash
+sam build
+sam deploy --guided
+```
 
 ### Testes unitários
-Todos os testes da aplicação estão na pasta `tests/unit` e podem ser executados com o comando ```npm run test``` na pasta src.
+Todos os testes da aplicação estão na pasta `tests/unit`.
+Para rodar os testes, na pasta raiz do projeto, execute:
 
-## Desafio Serverless Síncrono
+```bash
+cd src
+npm install
+npm run test
+```
+
+## Descrição dos recursos Serverless Síncrono
 
 ### Função Lambda - SyncChallengeFunction
 
@@ -15,7 +39,9 @@ Esta função é responsável por sincronizar desafios. Acionada pelo API Gatewa
 - **Runtime**: Node.js 20.x.
 - **Eventos**: A função é acionada por um evento HTTP POST.
 
-## Desafio Serverless Assíncrono
+
+
+## Descrição dos recursos Serverless Assíncrono
 
 
 ### Função Lambda - AsyncChallengeFunction
