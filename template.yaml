@@ -28,6 +28,15 @@ Resources:
           Properties:
             Path: /createUser
             Method: post
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2022
+        Sourcemap: true
+        EntryPoints:
+        - app.ts
+
   EventRule: 
     Type: AWS::Events::Rule
     Properties: 
@@ -35,10 +44,12 @@ Resources:
       EventPattern: 
         source: 
           - "challenge.async"
+
   AsyncChallengeQueue:
     Type: AWS::SQS::Queue
     Properties:
       QueueName: async-challenge-queue
+
   AsyncChallengeFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -60,7 +71,6 @@ Resources:
           Properties:
             Queue: !GetAtt AsyncChallengeQueue.Arn
             BatchSize: 1
-
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
