@@ -29,25 +29,20 @@ export const syncChallengeLambdaHandler = async (event: APIGatewayProxyEvent): P
     }
 };
 
-export const asyncChallengeLambdaHandler = async (event: SQSEvent): Promise<void> => {
-    try {
-        const client = new EventBridgeClient({});
+export const asyncChallengeLambdaHandler = async (event: SQSEvent): Promise<boolean> => {
+    const client = new EventBridgeClient({});
 
-        const response = await client.send(
-            new PutEventsCommand({
-                Entries: [
-                    {
-                        Source: 'challenge.async',
-                        DetailType: 'Message',
-                        Detail: JSON.stringify(event.Records[0].body),
-                    },
-                ],
-            }),
-        );
+    await client.send(
+        new PutEventsCommand({
+            Entries: [
+                {
+                    Source: 'challenge.async',
+                    DetailType: 'Message',
+                    Detail: JSON.stringify(event.Records[0].body),
+                },
+            ],
+        }),
+    );
 
-        console.log('PutEvents response:');
-        console.log(response);
-    } catch (err) {
-        console.log(err);
-    }
+    return true;
 };
