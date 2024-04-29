@@ -5,10 +5,33 @@
 - **Teste Serverless Síncrono:**
   - Função Lambda acionada pela API Gateway no método POST através do endpoint `createUser`. O corpo da requisição é retornado como resposta de sucesso para a API Gateway.
 
+Exemplo de body a ser enviado: 
+
+```json
+{
+  "name": "John Doe",
+  "age": 30,
+  "email": "john.doe@example.com",
+  "address": {
+    "street": "123 Main Street",
+    "city": "Anytown",
+    "state": "NY",
+    "zip": "12345"
+  }
+}
+```
+
 - **Teste Serverless Assíncrono:**
   - Função Lambda acionada pelo SQS.
   - Após o acionamento, a lambda envia os mesmos dados para um EventBridge.
 
+
+```json
+{
+  "id": "866044287365636609",
+  "name": "John Doe",
+}
+```
 
 ## Deploy
 Para deploy do projeto, na pasta raiz, execute:
@@ -38,6 +61,7 @@ Esta função é responsável por sincronizar desafios. Acionada pelo API Gatewa
 - **Handler**: O handler da função é exportado em `src/app.ts`.
 - **Runtime**: Node.js 20.x.
 - **Eventos**: A função é acionada por um evento HTTP POST.
+
 
 
 
