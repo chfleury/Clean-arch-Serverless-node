@@ -78,8 +78,3 @@ Esta lambda é acionada por mensagens na fila SQS `async-challenge-queue` e envi
 
 **Detalhes:**
 - **Nome da Fila**: `async-challenge-queue`
-
-## EventRule
-
-Esta regra de eventos está associada ao source `challenge.async`, e foi criada com intuito de facilitar o monitoramento dos eventos com este source para debug.
-

@@ -37,14 +37,6 @@ Resources:
         EntryPoints:
         - app.ts
 
-  EventRule: 
-    Type: AWS::Events::Rule
-    Properties: 
-      Description: "DebugEventRule"
-      EventPattern: 
-        source: 
-          - "challenge.async"
-
   AsyncChallengeQueue:
     Type: AWS::SQS::Queue
     Properties:
