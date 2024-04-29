@@ -19,14 +19,14 @@ https://www.postman.com/chfleury/workspace/my-public-workspace/collection/112979
 {
     "baseCurrency": "USD",
     "targetCurrency": "BRL",
-    "amount": "234.54"
+    "amount": 234.54
 }
 ```
 
 - **Descrição dos Campos:**
-  - `baseCurrency`: A moeda de origem que o usuário deseja converter.
-  - `targetCurrency`: A moeda de destino para a qual o usuário deseja converter.
-  - `amount`: A quantidade da moeda de origem que o usuário deseja converter.
+  - `baseCurrency`: (String, obrigatório) A moeda de origem que o usuário deseja converter. 
+  - `targetCurrency`: (String, obrigatório) A moeda de destino para a qual o usuário deseja converter.
+  - `amount`: (Float, 0 a 2 casas decimais, obrigatório) A quantidade da moeda de origem que o usuário deseja converter.
 
 - **Resposta:**
   
